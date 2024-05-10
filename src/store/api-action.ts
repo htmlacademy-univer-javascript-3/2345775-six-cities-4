@@ -127,8 +127,8 @@ export const fetchOfferAction = createAsyncThunk<void, string, {
     const { data : offerData } = await api.get<OfferData>(`${APIRoute.Offers}/${id}`);
     const { data : reviews } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
     const { data : nearbyOffers } = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(setSelectedOfferDataLoadingStatus(false));
     dispatch(loadSelectedOffer({offerData, reviews, nearbyOffers}));
+    dispatch(setSelectedOfferDataLoadingStatus(false));
   }
 );
 

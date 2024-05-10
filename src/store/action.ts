@@ -38,6 +38,4 @@ export const loadSelectedOffer = createAction<SelectedOffer>('offer/load');
 
 export const setSelectedOfferDataLoadingStatus = createAction<boolean>('offer/setSelectedOfferDataLoadingStatus');
 
-export const changeSelectedOfferPoint = createAction<Point>('offer/changePoint');
-
 export const loadSelectedOfferComments = createAction<Review[]>('offer/loadComment');

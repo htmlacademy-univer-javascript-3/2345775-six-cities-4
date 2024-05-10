@@ -1,3 +1,4 @@
+import { getCommentDate } from '../../const';
 import { Review } from '../../types/review';
 
 type ReviewProps = {
@@ -25,7 +26,7 @@ function ReviewItem({review}: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+        <time className="reviews__time">{getCommentDate(review.date.split('-').splice(0, 2))}</time>
       </div>
     </li>
   );

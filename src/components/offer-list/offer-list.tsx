@@ -1,4 +1,4 @@
-import getFilter from '../../const';
+import {getFilter} from '../../const';
 import { useAppSelector } from '../../hooks';
 import {Offer} from '../../types/offer';
 import CityCard from '../city-card/city-card';

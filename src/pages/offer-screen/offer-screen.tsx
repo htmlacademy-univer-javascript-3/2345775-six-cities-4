@@ -2,19 +2,25 @@ import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import CityCardList from '../../components/offer-list/offer-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import LoginHeader from '../../components/login-header/login-header';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../components/constants/status';
+import { fetchOfferAction } from '../../store/api-action';
 
 function OfferScreen(): JSX.Element {
   const selectedOffer = useAppSelector((state) => state.selectedOffer);
   const offerData = selectedOffer?.offerData;
+  const dispatch = useAppDispatch();
   const offers = useAppSelector((state) => state.offers);
   const nearbyOffers = selectedOffer?.nearbyOffers;
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const rating = useAppSelector((state) => state.selectedOffer?.offerData.rating);
   const isSelectedOfferDataLoading = useAppSelector((state) => state.isSelectedOfferDataLoading);
+  const selectedOfferId = window.location.href.split('/').splice(-1)[0];
+  if (!nearbyOffers) {
+    dispatch(fetchOfferAction(selectedOfferId));
+  }
   if (isSelectedOfferDataLoading) {
     return (
       <LoadingScreen />
@@ -69,10 +75,10 @@ function OfferScreen(): JSX.Element {
                   {offerData?.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offerData?.bedrooms}
+                  {`${offerData?.bedrooms} Bedrooms`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {offerData?.maxAdults}
+                  {`Max ${offerData?.maxAdults} adults`}
                 </li>
               </ul>
               <div className="offer__price">
@@ -92,7 +98,7 @@ function OfferScreen(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`offer__avatar-wrapper ${offerData?.host.isPro ? 'offer__avatar-wrapper--pro' : 'user__avatar-wrapper'}`}>
                     <img className="offer__avatar user__avatar" src={offerData?.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">

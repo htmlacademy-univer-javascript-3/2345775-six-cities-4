@@ -13,13 +13,14 @@ import browserHistory from '../../browser-history.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import { fetchFavoritesAction } from '../../store/api-action.ts';
 import { store } from '../../store/index.ts';
+import { useEffect } from 'react';
 
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  if (authorizationStatus === AuthorizationStatus.Auth) {
+  useEffect(() => {
     store.dispatch(fetchFavoritesAction());
-  }
+  }, [authorizationStatus]);
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
@@ -30,17 +31,17 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen/>}
+          element={<MainScreen />}
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginScreen/>}
+          element={<LoginScreen />}
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute>
-              <FavotitesScreen/>
+              <FavotitesScreen />
             </PrivateRoute>
           }
         />
@@ -50,7 +51,7 @@ function App(): JSX.Element {
         />
         <Route
           path="*"
-          element={<ErrorScreen/>}
+          element={<ErrorScreen />}
         />
       </Routes>
     </HistoryRouter>

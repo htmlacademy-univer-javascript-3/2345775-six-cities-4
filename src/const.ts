@@ -42,6 +42,12 @@ const monthsMap = new Map ([
   ['12', 'December'],
 ]);
 
+export const cardTypeMap = new Map ([
+  ['default', 'cities__card place-card'],
+  ['near', 'near-places__card place-card'],
+  ['favorite', 'favorites__card place-card']
+]);
+
 export const getCommentDate = (date: string[]): string => {
   const year = date[0];
   const month = monthsMap.get(date[1]);

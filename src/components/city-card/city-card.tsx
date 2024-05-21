@@ -9,10 +9,11 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthorizationStatus } from '../constants/status';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute } from '../constants/app-route';
+import { cardTypeMap } from '../../const';
 
 type OfferProps = {
   offer: Offer;
-  cardType: 'default' | 'near';
+  cardType: 'default' | 'near' | 'favorite';
 }
 
 function CityCardComponent({ offer, cardType }: OfferProps): JSX.Element {
@@ -48,18 +49,18 @@ function CityCardComponent({ offer, cardType }: OfferProps): JSX.Element {
 
 
   return (
-    <article className={`${cardType === 'default' ? 'cities__card place-card' : 'near-places__card place-card'}`} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+    <article className={`${cardTypeMap.get(cardType)}`} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardType === 'favorite' ? 'favorites' : 'cities'}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width={cardType === 'favorite' ? '150' : '260'} height={cardType === 'favorite' ? '110' : '200'} alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={(cardType === 'favorite') ? 'favorites__card-info place-card__info' : 'place-card__info'}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>

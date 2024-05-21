@@ -1,13 +1,7 @@
-import Card from '../../components/city-card/city-card';
-import { useAppSelector } from '../../hooks';
 import LoginHeader from '../../components/login-header/login-header';
-import { getOffers } from '../../store/offer-process/selectors';
-import { getFavorites } from '../../store/favorite-process/selectors';
+import FavoritesList from '../../components/favorites-list/favorites-list';
 
 function FavoritesScreen(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favorites = useAppSelector(getFavorites);
-  const favoriteOffers = offers.filter((offer) => favorites.includes(offer.id));
   return(
     <div className="page">
       <header className="header">
@@ -20,22 +14,7 @@ function FavoritesScreen(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  {favoriteOffers.map((offer) =>
-                    <Card key={offer.id} offer={offer} cardType='default'/>
-                  )}
-                </div>
-              </li>
-            </ul>
+            <FavoritesList/>
           </section>
         </div>
       </main>

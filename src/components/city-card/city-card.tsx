@@ -5,6 +5,10 @@ import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { changeSelectedPoint } from '../../store/offer-process/offer-process';
 import { getFavorites } from '../../store/favorite-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../constants/status';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute } from '../constants/app-route';
 
 type OfferProps = {
   offer: Offer;
@@ -14,15 +18,20 @@ type OfferProps = {
 function CityCardComponent({ offer, cardType }: OfferProps): JSX.Element {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
+  const status = useAppSelector(getAuthorizationStatus);
   const handleOfferTitleClick = () => {
     dispatch(fetchOfferAction(offer.id));
   };
   const handleAddFavorite = () => {
-    dispatch(changeFavorite({
-      favorites: favorites,
-      offerId: offer.id,
-      status: favorites.includes(offer.id) ? 0 : 1
-    }));
+    if (status === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    } else {
+      dispatch(changeFavorite({
+        favorites: favorites,
+        offerId: offer.id,
+        status: favorites.includes(offer.id) ? 0 : 1
+      }));
+    }
   };
 
   const handleOnMouseEnter = () => {

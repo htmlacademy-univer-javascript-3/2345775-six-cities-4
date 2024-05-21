@@ -1,6 +1,6 @@
 import { Offer } from './types/offer';
 
-export const getFilter = (offers: Offer[] | undefined, filterType: string): Offer[] | undefined => {
+export const getFilterSorting = (offers: Offer[] | undefined, filterType: string): Offer[] | undefined => {
   const defaultOffers = offers?.slice();
   switch (filterType) {
     case 'Popular':
@@ -47,3 +47,11 @@ export const getCommentDate = (date: string[]): string => {
   const month = monthsMap.get(date[1]);
   return `${year} ${month}`;
 };
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  SelectedOffer = 'SELECTED_OFFER',
+  User = 'USER',
+  FavoriteProcess = 'FAVORITE',
+  Error = 'ERROR'
+}

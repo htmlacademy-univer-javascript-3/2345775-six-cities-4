@@ -17,7 +17,6 @@ function CommentForm() {
   const id = useAppSelector(getSelectedOffer)?.offerData.id;
   const isCommentPosting = useAppSelector(getIsCommentPosting);
   const isCommentRejected = useAppSelector(getIsCommentRejected);
-  console.log(isCommentRejected);
   const dispatch = useAppDispatch();
 
   const handleCommentSubmit = () => {

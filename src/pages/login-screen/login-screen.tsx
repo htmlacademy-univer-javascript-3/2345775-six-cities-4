@@ -1,20 +1,24 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../components/constants/status';
-import { AppRoute } from '../../components/constants/app-route';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AppRoute } from '../../components/constants/app-route';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const status = useAppSelector(getAuthorizationStatus);
-  if (status === AuthorizationStatus.Auth) {
-    window.location.href = AppRoute.Main;
-  }
+  useEffect(() => {
+    if (status === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  });
+
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

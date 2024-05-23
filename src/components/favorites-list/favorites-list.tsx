@@ -7,7 +7,8 @@ function FavoritesList(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const favorites = useAppSelector(getFavorites);
   const favoriteOffers = offers.filter((offer) => favorites.includes(offer.id));
-  const favoriteOffersCities = favoriteOffers.map((of) => of.city.name);
+  const favoriteOffersCitiesSet = new Set(favoriteOffers.map((of) => of.city.name));
+  const favoriteOffersCities = Array.from(favoriteOffersCitiesSet);
   return (
     <ul className="favorites__list">
       {favoriteOffersCities.map((city) => (

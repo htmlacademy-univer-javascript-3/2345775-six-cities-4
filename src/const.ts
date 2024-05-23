@@ -51,7 +51,7 @@ export const cardTypeMap = new Map ([
 export const getCommentDate = (date: string[]): string => {
   const year = date[0];
   const month = monthsMap.get(date[1]);
-  return `${year} ${month}`;
+  return `${month} ${year}`;
 };
 
 export enum NameSpace {

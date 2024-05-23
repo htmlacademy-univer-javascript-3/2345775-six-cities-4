@@ -4,6 +4,7 @@ import { logoutAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../constants/status';
 import { getAuthorizationStatus, getEmail } from '../../store/user-process/selectors';
 import { getFavorites } from '../../store/favorite-process/selectors';
+import { addFavorite } from '../../store/favorite-process/favorite-process';
 
 function LoginHeader(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ function LoginHeader(): JSX.Element {
   const status = useAppSelector(getAuthorizationStatus);
   const handleSignOut = () => {
     dispatch(logoutAction());
+    dispatch(addFavorite([]));
   };
   return (
     <header className="header">

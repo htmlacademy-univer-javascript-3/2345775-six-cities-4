@@ -16,10 +16,14 @@ export type ErrorProcess = {
 export type SelectedOfferProcess = {
   selectedOffer: SelectedOffer | undefined;
   isSelectedOfferDataLoading: boolean;
+  isCommentPosting: boolean;
+  isCommentRejected: boolean;
 }
 
 export type FavoriteProcess = {
   favorites: string[];
+  fetchedFavorites: Offer[];
+  isFavoriteLoading: boolean;
 }
 
 export type OfferProcess = {
@@ -28,6 +32,7 @@ export type OfferProcess = {
   filterType: string;
   selectedPoint: Point | undefined;
   isOffersDataLoading: boolean;
+  hasError: boolean;
 }
 
 export type State = ReturnType<typeof store.getState>;

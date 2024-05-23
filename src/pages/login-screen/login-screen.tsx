@@ -1,16 +1,22 @@
 import { FormEvent, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../components/constants/status';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AppRoute } from '../../components/constants/app-route';
+import { changeCity } from '../../store/offer-process/offer-process';
+import { redirectToRoute } from '../../store/action';
+import { cities } from '../../const';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const randomIndex = Math.floor(Math.random() * cities.length);
+  const randomCity = cities[randomIndex];
+
 
   const status = useAppSelector(getAuthorizationStatus);
   useEffect(() => {
@@ -29,6 +35,11 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value
       }));
     }
+  };
+
+  const handleCityClick = (city: string) => {
+    dispatch(changeCity(city));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
   return (
@@ -60,6 +71,13 @@ function LoginScreen(): JSX.Element {
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
+          </section>
+          <section className="locations locations--login locations--current">
+            <div className="locations__item">
+              <a className="locations__item-link" onClick={() => handleCityClick(randomCity)}>
+                <span>{randomCity}</span>
+              </a>
+            </div>
           </section>
         </div>
       </main>

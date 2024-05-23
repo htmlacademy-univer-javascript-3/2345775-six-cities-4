@@ -12,7 +12,7 @@ import { OfferData } from '../types/offer-data';
 import { Review } from '../types/review';
 import { CommentData } from '../types/comment-data';
 import { SelectedOffer } from '../types/selected-offer';
-import { addFavorite } from './favorite-process/favorite-process';
+import { addFavorite, addFavoriteOffers } from './favorite-process/favorite-process';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setError } from './error-process/error-process';
 
@@ -92,6 +92,7 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoute.Favorite);
     dispatch(addFavorite(data.map((offer) => offer.id)));
+    dispatch(addFavoriteOffers(data));
   }
 );
 

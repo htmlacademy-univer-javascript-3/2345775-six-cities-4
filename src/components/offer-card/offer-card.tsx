@@ -56,7 +56,7 @@ function OfferCardComponent({ offer, cardType }: OfferProps): JSX.Element {
         </div>
       )}
       <div className={`${cardType === 'favorite' ? 'favorites' : 'cities'}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <a>
           <img className="place-card__image" src={offer.previewImage} width={cardType === 'favorite' ? '150' : '260'} height={cardType === 'favorite' ? '110' : '200'} alt="Place image" />
         </a>
       </div>

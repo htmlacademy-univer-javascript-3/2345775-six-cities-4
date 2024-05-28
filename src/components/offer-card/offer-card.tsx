@@ -16,7 +16,7 @@ type OfferProps = {
   cardType: 'default' | 'near' | 'favorite';
 }
 
-function CityCardComponent({ offer, cardType }: OfferProps): JSX.Element {
+function OfferCardComponent({ offer, cardType }: OfferProps): JSX.Element {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
   const status = useAppSelector(getAuthorizationStatus);
@@ -88,6 +88,6 @@ function CityCardComponent({ offer, cardType }: OfferProps): JSX.Element {
   );
 }
 
-const CityCard = memo(CityCardComponent);
+const OfferCard = memo(OfferCardComponent);
 
-export default CityCard;
+export default OfferCard;
